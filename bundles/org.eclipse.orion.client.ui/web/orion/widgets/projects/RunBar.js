@@ -152,7 +152,7 @@ define([
 							this._commandRegistry.registerCommandContribution(menuItem.id, "orion.launchConfiguration.delete", 1); //$NON-NLS-0$
 							domNodeWrapperList = [];
 							this._commandRegistry.renderCommands(menuItem.id, menuItem.firstChild, launchConfiguration, this, "tool", null, domNodeWrapperList); //$NON-NLS-0$
-							if (domNodeWrapperList.lenght > 0){
+							if (domNodeWrapperList.length > 0){
 								domNodeWrapperList[0].domNode.classList.remove("commandMargins"); //$NON-NLS-0$
 								domNodeWrapperList[0].domNode.classList.add("launchConfigurationDeleteButton"); //$NON-NLS-0$
 							}
@@ -315,15 +315,9 @@ define([
 		 * @param {Boolean} checkStatus Specifies whether or not the status of the launchConfiguration should be checked
 		 */
 		selectLaunchConfiguration: function(launchConfiguration, checkStatus) {
-			this._disableLink(this._appLink);
-			
 			if (launchConfiguration) {
 				this._selectedLaunchConfiguration = launchConfiguration;
 				this._setLaunchConfigurationsLabel(launchConfiguration);
-				
-				if (launchConfiguration.Url) {
-					this._enableLink(this._appLink, launchConfiguration.Url);
-				}
 				
 				if (checkStatus) {
 					this._checkLaunchConfigurationStatus(launchConfiguration);
@@ -442,6 +436,10 @@ define([
 			if (appInfoText) {
 				this._setText(this._appInfoSpan, "(" + appInfoText.toLocaleLowerCase() + ")"); //$NON-NLS-1$ //$NON-NLS-0$
 			}
+			
+			if (status.Url) {
+				this._enableLink(this._appLink, status.Url);
+			}
 		},
 		
 		/**
@@ -533,6 +531,7 @@ define([
 		_disableAllControls: function() {
 			this._disableControl(this._playButton);
 			this._disableControl(this._stopButton);
+			this._disableLink(this._appLink);
 		},
 		
 		_enableControl: function(domNode) {
